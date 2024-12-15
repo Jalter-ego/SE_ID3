@@ -31,7 +31,7 @@ export class MainTableComponent {
       antiguedad: '1 - 5',
       ingresos: '> 1200',
       trabajo: 'Tiene',
-      creditos: 'Aceptado',
+      creditos: 'Rechazado',
     },
     {
       moroso: 'No',
