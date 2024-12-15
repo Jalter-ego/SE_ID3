@@ -3,12 +3,13 @@
       <h1>Tabla Principal</h1>
       <table class="w-full border border-gray-300 border-collapse text-left overflow-hidden sm:text-sm">
         <thead>
-          <tr>
+          <tr class="border-b border-gray-300 hover:bg-gray-50">
             <th class="p-3 text-gray-600 font-semibold border-r border-gray-300">Moroso</th>
             <th class="p-3 text-gray-600 font-semibold border-r border-gray-300">Antigüedad</th>
             <th class="p-3 text-gray-600 font-semibold border-r border-gray-300 w-28">Ingresos</th>
             <th class="p-3 text-gray-600 font-semibold border-r border-gray-300">Trabajos</th>
             <th class="p-3 text-gray-600 font-semibold border-r border-gray-300">Créditos</th>
+            <th *ngIf="editarModo" class="p-3 text-gray-600 font-semibold border-r border-gray-300">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -59,7 +60,7 @@
               </ng-template>
             </td>
             <!-- Acción para guardar los cambios -->
-            <td class="p-3 border-r border-gray-300 sm:p-2">
+            <td *ngIf="editarModo" class="p-3 border-r border-gray-300 sm:p-2">
               <button *ngIf="editarModo" (click)="guardarCambios(i)" class="bg-blue-500 text-white px-2 py-1 rounded">
                 Guardar
               </button>
@@ -84,10 +85,6 @@
     <p><strong>Entropía Global:</strong> {{ EG }}</p>
   </div>
   <div>
-    <div>
-      <!-- Botón para calcular las entropías -->
-      <button (click)="calcularEntropias()">Calcular Entropías</button>
-    </div>
     <p><strong>Ganancia Moroso:</strong> {{ ganancias['moroso'] }}</p>
     <p><strong>Ganancia Antiguedad:</strong> {{ ganancias['antiguedad'] }}</p>
     <p><strong>Ganancia Ingresos:</strong> {{ ganancias['ingresos'] }}</p>

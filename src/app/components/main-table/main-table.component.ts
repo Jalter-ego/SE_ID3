@@ -91,7 +91,7 @@ export class MainTableComponent {
     'trabajo',
     'creditos',
   ];
-  tablaInicial!: Tabla; // Inicializa en un método o constructor
+  tablaInicial!: Tabla; 
   tablasCreadas: any[] = [];
   editarModo: boolean = false;
 
@@ -133,11 +133,7 @@ export class MainTableComponent {
     this.editarModo = !this.editarModo;
   }
 
-  // Función para guardar los cambios de la fila
   guardarCambios(rowIndex: number) {
     console.log('Cambios guardados:', this.rows[rowIndex]);
   }
-
- 
-
 }

@@ -15,11 +15,11 @@ import { error } from 'node:console';
 })
 export class AppComponent implements AfterViewInit {
   title = 'proyect_id3';
+  textBotonInicio: string = 'Iniciar ID 3'
   mayGanancia: string = '';
   rootNode: TreeNode | null = null;
   currentNode: TreeNode | null = null;
   pregunta: string = '';
-  respuesta: string = '';
   ganancias: { [key: string]: number } = {};
   columnas: string[] = [];
   filas: string[] = [];
@@ -32,21 +32,20 @@ export class AppComponent implements AfterViewInit {
 
   async ngAfterViewInit() {
     console.log(this.mainTable.EG);
-    this.tablaActual = this.mainTable.tablaInicial;
   }
 
   iniciarID3() {
+    this.textBotonInicio = "Reiniciar ID 3"
     this.mainTable.calcularEntropias();
-    console.log(this.mainTable.tablaInicial);
-    const columnaMayor = this.mainTable.mayorGanancia();
-    this.mayGanancia = columnaMayor;
+    this.tablaActual = this.mainTable.tablaInicial;
+    this.mayGanancia = this.mainTable.mayorGanancia();
     this.filas = this.nuevasFilas(this.mainTable.tablaInicial);
     this.index++;
     const root: TreeNode = {
-      name: columnaMayor,
+      name: this.mayGanancia,
       children: [],
     };
-    switch (columnaMayor) {
+    switch (this.mayGanancia) {
       case 'moroso':
         this.insertarTablas(this.filas, root);
         this.pregunta = 'moroso Si?';
@@ -84,19 +83,15 @@ export class AppComponent implements AfterViewInit {
       switch (this.mayGanancia) {
         case 'moroso':
           this.casoMoroso();
-
           break;
         case 'antiguedad':
           this.casoAntiguedad();
-
           break;
         case 'ingresos':
           this.casoIngreso();
-
           break;
         case 'trabajo':
           this.casoTrabajo();
-
           break;
       }
     }
@@ -214,8 +209,8 @@ export class AppComponent implements AfterViewInit {
       }
     });
     console.log(Array.from(uniqueValues));
-    const uniqueArray = Array.from(uniqueValues); 
-    return uniqueArray.reverse();
+    const uniqueArray = Array.from(uniqueValues);
+    return uniqueArray;
   }
 
   mayorGanancia(): string {
@@ -227,7 +222,6 @@ export class AppComponent implements AfterViewInit {
         col = columna;
       }
     });
-    console.log(mayor);
     return col;
   }
   nuevasColumnas(selectTable: Tabla): string[] {
@@ -253,7 +247,6 @@ export class AppComponent implements AfterViewInit {
           break;
       }
     });
-    console.log(this.ganancias);
     return this.ganancias;
   }
 
@@ -261,21 +254,27 @@ export class AppComponent implements AfterViewInit {
     if (!this.tablaActual) {
       throw new Error('tablaActual es undefined');
     }
-
     const columnas: string[] = this.tablaActual.columnas.filter(
       (columna) => columna !== columnaMayor
     );
     const rows: any[] = this.tablaActual.filas
       .filter((row) => row[columnaMayor] === dato)
       .map((row) => {
-        // Crear una nueva fila sin la columnaMayor
         const { [columnaMayor]: _, ...filteredRow } = row;
         return filteredRow;
       });
 
     const tabla: Tabla = new Tabla(columnas, rows);
-
     return tabla;
+  }
+
+  columnasSinCredito(): string[] {
+    const colSinCredito: string[] = []
+    this.columnas.forEach((columna)=>{
+      if (columna != 'creditos') 
+        colSinCredito.push(columna)
+    })
+    return colSinCredito 
   }
 
   cerrarModal() {

@@ -10,21 +10,22 @@
       (click)="iniciarID3()"
       class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-36"
     >
-      Iniciar ID 3
+      {{textBotonInicio}}
     </button>
     <div>
       <p><strong>Mayor ganancia: </strong>{{ mayGanancia }}</p>
-      <p>{{pregunta}}</p>
+      <p class="text-red-500 text-2xl">{{pregunta}}</p>
       <div *ngIf="pregunta">
         <button (click)="Si()" class="px-4 py-2 rounded bg-green-300">Si</button>
         <button (click)="No()" class="px-4 py-2 rounded bg-red-300">No</button>
       </div>
     </div>
     <section>
-      <h3>Ganancias por columna:</h3>
+      <strong>Ganancias por columna:</strong>
+      <p><strong>Entropia global de la tabla actual: </strong>{{tablaActual?.EG}}</p>
       <ul>
-        <li *ngFor="let item of columnas">
-          {{ item }}: {{ ganancias[item] }}
+        <li *ngFor="let item of columnasSinCredito()">
+          <strong>{{ item }}: </strong> {{ ganancias[item] }}
         </li>
       </ul>
     </section>
