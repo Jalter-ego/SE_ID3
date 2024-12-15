@@ -40,7 +40,6 @@ export class AppComponent implements AfterViewInit {
     this.tablaActual = this.mainTable.tablaInicial;
     this.mayGanancia = this.mainTable.mayorGanancia();
     this.filas = this.nuevasFilas(this.mainTable.tablaInicial);
-    this.index++;
     const root: TreeNode = {
       name: this.mayGanancia,
       children: [],
@@ -52,7 +51,8 @@ export class AppComponent implements AfterViewInit {
         break;
       case 'antiguedad':
         this.insertarTablas(this.filas, root);
-        this.pregunta = 'antiguedad < 1?';
+        console.log(this.index)
+        this.No()
         break;
       case 'ingresos':
         this.insertarTablas(this.filas, root);
@@ -196,7 +196,7 @@ export class AppComponent implements AfterViewInit {
       const currentRow = this.filas[this.index];
       this.pregunta = `${this.mayGanancia} ${currentRow}?`;
       this.index++;
-    }
+    }else this.index = 0;
   }
 
   nuevasFilas(selectTable: Tabla): string[] {

@@ -77,12 +77,10 @@
       </button>
     </div>
   <div>
-    <!-- Botón para calcular la entropía global -->
-    <button (click)="EGlobal()">Calcular Entropía Global</button>
   </div>
 
   <div *ngIf="EG !== null">
-    <p><strong>Entropía Global:</strong> {{ EG }}</p>
+    <p><strong>Entropía Global:</strong> {{ this.tablaInicial.EG }}</p>
   </div>
   <div>
     <p><strong>Ganancia Moroso:</strong> {{ ganancias['moroso'] }}</p>

@@ -106,9 +106,6 @@ export class MainTableComponent {
     this.EG = this.tablaInicial.calcularEntropia('creditos');
   }
 
-  EGlobal() {
-    this.EG = this.tablaInicial.calcularEntropia('creditos');
-  }
   calcularEntropias() {
     this.ganancias['moroso'] = this.tablaInicial.EMoroso();
     this.ganancias['antiguedad'] = this.tablaInicial.EAntiguedad();
@@ -134,6 +131,7 @@ export class MainTableComponent {
   }
 
   guardarCambios(rowIndex: number) {
+    this.tablaInicial.EG = this.tablaInicial.calcularEntropia('creditos')
     console.log('Cambios guardados:', this.rows[rowIndex]);
   }
 }
