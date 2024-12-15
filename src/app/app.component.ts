@@ -25,7 +25,7 @@ export class AppComponent implements AfterViewInit {
   filas: string[] = [];
   index: number = 0;
   tablaActual: Tabla | undefined;
-  modalVisible: boolean = false; 
+  modalVisible: boolean = false;
   modalMessage: string = '';
 
   @ViewChild(MainTableComponent) mainTable!: MainTableComponent;
@@ -37,6 +37,7 @@ export class AppComponent implements AfterViewInit {
 
   iniciarID3() {
     this.mainTable.calcularEntropias();
+    console.log(this.mainTable.tablaInicial);
     const columnaMayor = this.mainTable.mayorGanancia();
     this.mayGanancia = columnaMayor;
     this.filas = this.nuevasFilas(this.mainTable.tablaInicial);
@@ -47,28 +48,26 @@ export class AppComponent implements AfterViewInit {
     };
     switch (columnaMayor) {
       case 'moroso':
-        let datos = ['Si', 'No'];
-        this.insertarTablas(datos, root);
+        this.insertarTablas(this.filas, root);
         this.pregunta = 'moroso Si?';
         break;
       case 'antiguedad':
-        datos = ['< 1','> 5','1 - 5']
-        this.insertarTablas(datos, root)
+        this.insertarTablas(this.filas, root);
         this.pregunta = 'antiguedad < 1?';
         break;
       case 'ingresos':
-        datos = ['< 600','> 1200','600 - 1200']
-        this.insertarTablas(datos, root)
+        this.insertarTablas(this.filas, root);
         this.pregunta = 'ingresos < 600?';
         break;
       case 'trabajo':
-        datos = ['Tiene', 'No-tiene'];
-        this.insertarTablas(datos, root);
+        this.insertarTablas(this.filas, root);
         this.pregunta = 'trabajo Tiene?';
         break;
     }
   }
   insertarTablas(datos: string[], root: TreeNode) {
+    console.log(datos);
+    console.log(root);
     datos.forEach((dato) => {
       const newTable = this.generarTabla(this.mayGanancia, dato);
       const childNode: TreeNode = { name: dato, tables: [newTable] };
@@ -77,6 +76,7 @@ export class AppComponent implements AfterViewInit {
     });
     this.rootNode = root;
     this.currentNode = this.rootNode;
+    console.log(this.currentNode);
   }
 
   Si() {
@@ -152,7 +152,7 @@ export class AppComponent implements AfterViewInit {
       this.mayGanancia = this.mayorGanancia();
       this.filas = this.nuevasFilas(selectTable);
       this.tablaActual = selectTable;
-      this.validarEG(selectNode)
+      this.validarEG(selectNode);
       const newChildren = this.filas.map((fila) => {
         const newTable = this.generarTabla(this.mayGanancia, fila);
         return {
@@ -169,30 +169,30 @@ export class AppComponent implements AfterViewInit {
   }
   validarEG(selectNode: TreeNode) {
     if (this.tablaActual?.EG === 0) {
-      const newTabla: Tabla = new Tabla(['Nodo hoja'],['vacio'])
+      const newTabla: Tabla = new Tabla(['Nodo hoja'], ['vacio']);
       const newChildren = {
         name: this.mayGanancia,
         children: [],
-        tables: [newTabla] 
+        tables: [newTabla],
       };
-      selectNode.children = [newChildren]
-      this.currentNode = selectNode
+      selectNode.children = [newChildren];
+      this.currentNode = selectNode;
       this.modalMessage = `El proceso ha finalizado, Entropia Global(EG) es 0`;
-      this.modalVisible = true; 
-      throw new Error("")
+      this.modalVisible = true;
+      throw new Error('');
     }
     if (this.tablaActual?.EG === 1) {
-      const newTabla: Tabla = new Tabla(['Nodo hoja'],['vacio'])
+      const newTabla: Tabla = new Tabla(['Nodo hoja'], ['vacio']);
       const newChildren = {
         name: this.mayGanancia,
         children: [],
-        tables: [newTabla] 
+        tables: [newTabla],
       };
-      selectNode.children = [newChildren]
-      this.currentNode = selectNode
-      this.currentNode = this.rootNode
+      selectNode.children = [newChildren];
+      this.currentNode = selectNode;
+      this.currentNode = this.rootNode;
       this.modalMessage = `El proceso ha finalizado, Entropia Global(EG) es 1`;
-      this.modalVisible = true; 
+      this.modalVisible = true;
     }
   }
 
@@ -214,7 +214,8 @@ export class AppComponent implements AfterViewInit {
       }
     });
     console.log(Array.from(uniqueValues));
-    return Array.from(uniqueValues);
+    const uniqueArray = Array.from(uniqueValues); 
+    return uniqueArray.reverse();
   }
 
   mayorGanancia(): string {

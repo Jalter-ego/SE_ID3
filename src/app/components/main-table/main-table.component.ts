@@ -31,7 +31,7 @@ export class MainTableComponent {
       antiguedad: '1 - 5',
       ingresos: '> 1200',
       trabajo: 'Tiene',
-      creditos: 'Rechazado',
+      creditos: 'Aceptado',
     },
     {
       moroso: 'No',
@@ -93,6 +93,7 @@ export class MainTableComponent {
   ];
   tablaInicial!: Tabla; // Inicializa en un método o constructor
   tablasCreadas: any[] = [];
+  editarModo: boolean = false;
 
   ganancias: { [key: string]: number } = {};
   entropiaGlobal: number = 0;
@@ -126,6 +127,15 @@ export class MainTableComponent {
     });
     console.log(mayor);
     return col;
+  }
+
+  toggleEditMode() {
+    this.editarModo = !this.editarModo;
+  }
+
+  // Función para guardar los cambios de la fila
+  guardarCambios(rowIndex: number) {
+    console.log('Cambios guardados:', this.rows[rowIndex]);
   }
 
  

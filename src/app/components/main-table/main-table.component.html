@@ -13,16 +13,68 @@
         </thead>
         <tbody>
           <tr *ngFor="let row of rows; let i = index" class="border-b border-gray-300 hover:bg-gray-50">
-            <!-- Mostrar los datos en lugar de un select -->
-            <td class="p-3 border-r border-gray-300 sm:p-2">{{ row.moroso }}</td>
-            <td class="p-3 border-r border-gray-300 sm:p-2">{{ row.antiguedad }}</td>
-            <td class="p-3 border-r border-gray-300 sm:p-2">{{ row.ingresos }}</td>
-            <td class="p-3 border-r border-gray-300 sm:p-2">{{ row.trabajo }}</td>
-            <td class="p-3 border-r border-gray-300 sm:p-2">{{ row.creditos }}</td>
+            <!-- Moroso -->
+            <td class="p-3 border-r border-gray-300 sm:p-2">
+              <ng-container *ngIf="!editarModo; else editTemplate">
+                {{ row.moroso }}
+              </ng-container>
+              <ng-template #editTemplate>
+                <input [(ngModel)]="row.moroso" class="p-1 border border-gray-300 rounded">
+              </ng-template>
+            </td>
+            <!-- Antigüedad -->
+            <td class="p-3 border-r border-gray-300 sm:p-2">
+              <ng-container *ngIf="!editarModo; else editTemplate2">
+                {{ row.antiguedad }}
+              </ng-container>
+              <ng-template #editTemplate2>
+                <input [(ngModel)]="row.antiguedad" class="p-1 border border-gray-300 rounded">
+              </ng-template>
+            </td>
+            <!-- Ingresos -->
+            <td class="p-3 border-r border-gray-300 sm:p-2">
+              <ng-container *ngIf="!editarModo; else editTemplate3">
+                {{ row.ingresos }}
+              </ng-container>
+              <ng-template #editTemplate3>
+                <input [(ngModel)]="row.ingresos" class="p-1 border border-gray-300 rounded">
+              </ng-template>
+            </td>
+            <!-- Trabajo -->
+            <td class="p-3 border-r border-gray-300 sm:p-2">
+              <ng-container *ngIf="!editarModo; else editTemplate4">
+                {{ row.trabajo }}
+              </ng-container>
+              <ng-template #editTemplate4>
+                <input [(ngModel)]="row.trabajo" class="p-1 border border-gray-300 rounded">
+              </ng-template>
+            </td>
+            <!-- Créditos -->
+            <td class="p-3 border-r border-gray-300 sm:p-2">
+              <ng-container *ngIf="!editarModo; else editTemplate5">
+                {{ row.creditos }}
+              </ng-container>
+              <ng-template #editTemplate5>
+                <input [(ngModel)]="row.creditos" class="p-1 border border-gray-300 rounded">
+              </ng-template>
+            </td>
+            <!-- Acción para guardar los cambios -->
+            <td class="p-3 border-r border-gray-300 sm:p-2">
+              <button *ngIf="editarModo" (click)="guardarCambios(i)" class="bg-blue-500 text-white px-2 py-1 rounded">
+                Guardar
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
-  </div>
+    </div>
+  
+    <!-- Botón para activar/desactivar el modo de edición -->
+    <div class="mt-4">
+      <button (click)="toggleEditMode()" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+        {{ editarModo ? 'Cancelar Edición' : 'Editar Tabla' }}
+      </button>
+    </div>
   <div>
     <!-- Botón para calcular la entropía global -->
     <button (click)="EGlobal()">Calcular Entropía Global</button>
