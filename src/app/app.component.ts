@@ -47,20 +47,19 @@ export class AppComponent implements AfterViewInit {
     switch (this.mayGanancia) {
       case 'moroso':
         this.insertarTablas(this.filas, root);
-        this.pregunta = 'moroso Si?';
+        this.pregunta = 'moroso '+this.filas[this.index]+'?';this.index++
         break;
       case 'antiguedad':
         this.insertarTablas(this.filas, root);
-        console.log(this.index)
-        this.No()
+        this.pregunta = 'antiguedad '+this.filas[this.index]+'?';this.index++
         break;
       case 'ingresos':
         this.insertarTablas(this.filas, root);
-        this.pregunta = 'ingresos < 600?';
+        this.pregunta = 'ingresos '+this.filas[this.index]+'?';this.index++
         break;
       case 'trabajo':
         this.insertarTablas(this.filas, root);
-        this.pregunta = 'trabajo Tiene?';
+        this.pregunta = 'trabajo '+this.filas[this.index]+'?';this.index++
         break;
     }
   }
@@ -133,8 +132,6 @@ export class AppComponent implements AfterViewInit {
     if (!this.currentNode) {
       throw new Error('rootNode es undefined');
     }
-    console.log('nodo actual:');
-    console.log(this.currentNode);
     const selectNode = this.currentNode.children?.find(
       (child) => child.name === arg0
     );
@@ -142,8 +139,6 @@ export class AppComponent implements AfterViewInit {
       const selectTable = selectNode.tables[0];
       this.columnas = this.nuevasColumnas(selectTable);
       this.ganancias = this.calcularGanancias(selectTable);
-      console.log(this.columnas);
-      console.log(this.ganancias);
       this.mayGanancia = this.mayorGanancia();
       this.filas = this.nuevasFilas(selectTable);
       this.tablaActual = selectTable;
@@ -208,7 +203,6 @@ export class AppComponent implements AfterViewInit {
         uniqueValues.add(row[this.mayGanancia]);
       }
     });
-    console.log(Array.from(uniqueValues));
     const uniqueArray = Array.from(uniqueValues);
     return uniqueArray;
   }
